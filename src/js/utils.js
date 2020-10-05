@@ -3,6 +3,9 @@ export const setCookie = (value) => {
   d.setTime(d.getTime() + 24 * 60 * 60 * 1000);
   const expires = 'expires=' + d.toUTCString();
   document.cookie = '_cookies_accepted=' + value + '; ' + expires;
+  if (value == 'all' || value == 'functionality') {
+    dataLayer.push({event: 'pageview'});
+  }
 };
 
 export const getCookie = () => {
