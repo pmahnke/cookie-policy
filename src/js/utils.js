@@ -3,9 +3,8 @@ export const setCookie = (value) => {
   d.setTime(d.getTime() + 24 * 60 * 60 * 1000);
   const expires = 'expires=' + d.toUTCString();
   document.cookie = '_cookies_accepted=' + value + '; ' + expires;
-  if ((value == 'all' || value == 'performance') && typeof dataLayer == 'function') {
-    window.dataLayer = window.dataLayer || [];
-    dataLayer.push({event: 'pageview'});
+  if (value == 'all' || value == 'performance') {
+    pushPageview();
   }
 };
 
@@ -31,5 +30,14 @@ export const preferenceNotSelected = () => {
     return false;
   } else {
     return true;
+  }
+};
+
+export const pushPageview = () => {
+  if (typeof dataLayer == 'function') {
+    dataLayer.push({ event: 'pageview' });
+    return true;
+  } else {
+    return false;
   }
 };
