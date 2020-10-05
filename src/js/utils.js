@@ -4,6 +4,7 @@ export const setCookie = (value) => {
   const expires = 'expires=' + d.toUTCString();
   document.cookie = '_cookies_accepted=' + value + '; ' + expires;
   if (value == 'all' || value == 'functionality') {
+    window.dataLayer = window.dataLayer || [];
     dataLayer.push({event: 'pageview'});
   }
 };
