@@ -3,7 +3,7 @@ export const setCookie = (value) => {
   d.setTime(d.getTime() + 24 * 60 * 60 * 1000);
   const expires = 'expires=' + d.toUTCString();
   document.cookie = '_cookies_accepted=' + value + '; ' + expires;
-  if (value == 'all' || value == 'performance') {
+  if (enabledTracking(value)) {
     pushPageview();
   }
 };
@@ -33,9 +33,14 @@ export const preferenceNotSelected = () => {
   }
 };
 
-export const pushPageview = () => {
-  if (typeof dataLayer == 'function') {
+const pushPageview = () => {
+  if (typeof dataLayer === 'function') {
     dataLayer.push({ event: 'pageview' });
+  }
+};
+
+const enabledTracking = (selectedPreference) => {
+  if (selectedPreference == 'all' || selectedPreference == 'performance') {
     return true;
   } else {
     return false;
